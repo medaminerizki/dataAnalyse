@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisir un Graphique - Data Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 font-sans text-gray-900">
+
+    <!-- Page Container -->
+    <div class="min-h-screen flex flex-col items-center justify-center bg-green-50 py-8 px-4">
+
+        <!-- Header -->
+        <h1 class="text-4xl font-extrabold text-center text-green-700 mb-6">
+            Choisir un Type de Graphique
+        </h1>
+
+        <!-- Grid  -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Line Plot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=line">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Line Plot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Visualise la variation et tendance d'une valeur en fonction d'une autre.
+                            <br>Axes : X : Quantitatives, Y : Quantitatives
+                        </p>
+                       
+                    </div>
+                </a>
+            </div>
+
+            <!-- Scatter Plot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=scatter">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Scatter Plot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Visualise les clusters et la corrélation (positive ou négative) entre deux variables.
+                            <br>Axes : X : Quantitatives, Y : Quantitatives
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+
+            <!-- Boxplot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=boxplot">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Boxplot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Résumé des statistiques d'une distribution autour de la médiane.
+                            <br>Axes : Un seul axe, valeurs quantitatives
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+
+            <!-- Histogram Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=histogram">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Histogram</h2>
+                        <p class="text-gray-600 mb-4">
+                            Affiche la distribution d'une variable numérique par rapport à une variable catégorielle.
+                            <br>Axes : X : Catégorique/Quantitatif, Y : Quantitatif
+                        </p>
+                       
+                    </div>
+                </a>
+            </div>
+
+            <!-- Violin Plot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=violin">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Violin Plot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Combiné avec un KDE plot, il permet de visualiser la distribution des données.
+                            <br>Axes : X : Catégorique, Y : Quantitatif
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+
+            <!-- KDE Plot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=kde">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">KDE Plot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Estimation de la densité de probabilité continue d'une variable.
+                            <br>Axes : X : Quantitatif, Y : Densité
+                        </p>
+                       
+                    </div>
+                </a>
+            </div>
+
+            <!-- Bar Plot Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=bar">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Bar Plot</h2>
+                        <p class="text-gray-600 mb-4">
+                            Compare des variables catégoriques par rapport à une variable numérique.
+                            <br>Axes : X : Catégorique, Y : Quantitatif
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+
+            <!-- Heatmap Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=heatmap">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Heatmap</h2>
+                        <p class="text-gray-600 mb-4">
+                            Visualise les relations entre plusieurs variables à l'aide de couleurs.
+                            <br>Axes : X : Catégorique/Quantitatif, Y : Catégorique/Quantitatif
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+
+            <!-- Pie Chart Card -->
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <a href="{% url 'choose_columns' %}?graph_type=pie chart">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-green-700 mb-4">Pie Chart</h2>
+                        <p class="text-gray-600 mb-4">
+                            Utilisé pour afficher des proportions et des parts dans un ensemble.
+                            <br>Axes : Aucun axe spécifique, valeurs catégoriques.
+                        </p>
+                        
+                    </div>
+                </a>
+            </div>
+            
+            
+            
+
+        </div>
+        <div class="flex justify-center mt-6">
+            <a href="{% url 'menu' %}" class="px-6 py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700">
+                Retour au Menu
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
