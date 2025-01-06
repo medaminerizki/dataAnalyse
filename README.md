@@ -45,10 +45,10 @@ Voici les captures d'écran du projet :
 
 ### Accueil
 ![Accueil](screenshots/home.png)
-### Sélection de graphique
-![Sélection de graphique](screenshots/graph_select.png)
 ### Menu
 ![Menu](screenshots/menu.png)
+### Sélection de graphique
+![Sélection de graphique](screenshots/graph_select.png)
 ### Histogramme
 ![Histogramme](screenshots/histogram.png)
 ### Diagramme en barres
