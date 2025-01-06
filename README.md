@@ -63,5 +63,5 @@ Voici les captures d'écran du projet :
 ![Graphique à noyau de densité](screenshots/kde.png)
 
 ## Auteurs
-Mohamed Amine RIZKI
+Mohamed Amine RIZKI  
 Yahya SERNANE
