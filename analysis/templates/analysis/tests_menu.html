@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choix du Test d'Hypothèse</title>
+    <!-- Inclure le CSS de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <!-- Conteneur Principal -->
+    <div class="text-center p-8 bg-white rounded-lg shadow-2xl max-w-xl w-full">
+        <!-- Titre Principal -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-8">Choisissez un Test d'Hypothèse</h1>
+        
+        <!-- Flexbox pour les deux options -->
+        <div class="flex justify-center space-x-12">
+            
+            <!-- Div Z Test -->
+            <a href="{% url 'z_test' %}">
+                <div class="cursor-pointer p-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out w-48"
+                >
+                <div class="flex justify-center items-center mb-4">
+                    <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2 2 4-4M6 12l2-2 4 4" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-semibold">Z Test</h2>
+                <p class="mt-2 text-lg">Test d'hypothèse pour les grandes tailles d'échantillons.</p>
+                </div>
+            </a>
+            
+
+            <!-- Div T Test -->
+            <a href="{% url 't_test' %}">
+                <div class="cursor-pointer p-8 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out w-48"
+                    >
+                    <div class="flex justify-center items-center mb-4">
+                        <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m4-4H8" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-semibold">T Test</h2>
+                    <p class="mt-2 text-lg">Test d'hypothèse pour les petites tailles d'échantillons.</p>
+                </div>
+            </a>
+            
+        </div>
+
+        <!-- Back to Menu Button -->
+        <div class="flex justify-center mt-6">
+            <a href="{% url 'menu' %}" class="px-6 py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700">
+                Retour au Menu
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

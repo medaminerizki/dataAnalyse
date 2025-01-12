@@ -49,6 +49,8 @@ Voici les captures d'écran du projet :
 ![Menu](screenshots/menu.png)
 ### Sélection de graphique
 ![Sélection de graphique](screenshots/graph_select.png)
+### Menu
+![Menu](screenshots/menu.png)
 ### Histogramme
 ![Histogramme](screenshots/histogram.png)
 ### Diagramme en barres

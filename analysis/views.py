@@ -5,8 +5,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns  
 import numpy as np
+from io import BytesIO
 import io
 import base64
+from django import forms
+from scipy.stats import bernoulli, binom, uniform, poisson, norm, expon, t
+from .forms import ProbabilityForm
+
 
 
 def upload_file(request):
@@ -231,3 +236,277 @@ def graph_result(request):
 
     
     return render(request, 'analysis/graph_result.html', {'image_base64': image_base64})
+
+def probability_menu(request):
+    return render(request, 'analysis/probability_menu.html')
+
+def tests_menu(request):
+    return render(request, 'analysis/tests_menu.html')
+
+def bernoulli_form(request):
+    graph = None
+    if request.method == "POST":
+        p = float(request.POST.get('p'))  # probabilité de succès
+        
+        # Génération des valeurs de X (0 ou 1)
+        x = [0, 1]
+        y = bernoulli.pmf(x, p)
+        
+        # Création du graphique
+        fig, ax = plt.subplots()
+        ax.bar(x, y, color='green', alpha=0.7)
+        ax.set_title(f'Distribution de Bernoulli\n(p={p})')
+        ax.set_xlabel('Valeur')
+        ax.set_ylabel('Probabilité')
+        
+        # Sauvegarde du graphique dans un buffer
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/bernoulli_form.html', {'graph': graph})
+
+def binomial_form(request):
+    graph = None
+    if request.method == "POST":
+        n = int(request.POST.get('n'))  # Nombre d'essais
+        p = float(request.POST.get('p'))  # Probabilité de succès
+        
+        # Calcul des probabilités binomiales
+        x = np.arange(0, n + 1)
+        y = binom.pmf(x, n, p)
+        
+        # Création du graphique
+        fig, ax = plt.subplots()
+        
+        # Dessiner les barres
+        ax.bar(x, y, color='green', alpha=0.7, label="PMF - Barres")
+        
+        # Dessiner la courbe (fonction de masse de probabilité)
+        ax.plot(x, y, color='red', marker='o', label="Courbe")
+        
+        # Ajouter un titre et des labels
+        ax.set_title(f'Distribution Binomiale\n(n={n}, p={p})')
+        ax.set_xlabel('Nombre de succès')
+        ax.set_ylabel('Probabilité')
+        
+        # Ajouter une légende
+        ax.legend()
+
+        # Sauvegarde du graphique dans un buffer
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/binomial_form.html', {'graph': graph})
+
+def uniform_form(request):
+    graph = None
+    if request.method == "POST":
+        # Récupération des bornes a et b depuis le formulaire
+        a = float(request.POST.get('a'))  # Borne inférieure
+        b = float(request.POST.get('b'))  # Borne supérieure
+        
+        # Densité théorique
+        x = np.linspace(a - 1, b + 1, 500)
+        density = np.where((x >= a) & (x <= b), 1 / (b - a), 0)
+        
+        # Simulation de valeurs aléatoires
+        n_samples = 1000
+        random_values = np.random.uniform(a, b, n_samples)
+
+        # Création du graphique
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Affichage de la densité théorique (ligne bleue)
+        ax.plot(x, density, label=f'Densité théorique (a={a}, b={b})', color='blue', lw=2)
+
+        # Affichage de l'histogramme des valeurs simulées (en orange)
+        ax.hist(random_values, bins=30, density=True, alpha=0.5, color='green', label='Histogramme des données simulées')
+
+        # Personnalisation du graphique
+        ax.set_title("Loi Uniforme Continue", fontsize=16)
+        ax.set_xlabel("x", fontsize=14)
+        ax.set_ylabel("Densité de probabilité", fontsize=14)
+
+        # Affichage des bornes a et b (lignes verticales)
+        ax.axvline(a, color='red', linestyle='--', label=f'Borne a = {a}')
+        ax.axvline(b, color='red', linestyle='--', label=f'Borne b = {b}')
+        
+        # Ajouter la légende et la grille
+        ax.legend(fontsize=12)
+        ax.grid(alpha=0.3)
+        
+        # Sauvegarde du graphique dans un buffer
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/uniform_form.html', {'graph': graph})
+
+
+def poisson_form(request):
+    graph = None
+    if request.method == "POST":
+        mu = float(request.POST.get('mu'))  # Moyenne
+        
+        # Calcul des probabilités de Poisson
+        x = np.arange(0, int(mu * 3) + 1)  # Étendre l'intervalle x
+        y = poisson.pmf(x, mu)
+        
+        # Création du graphique
+        fig, ax = plt.subplots()
+        
+        # Affichage des barres (discrètes)
+        ax.bar(x, y, color='green', alpha=0.7, label=f'λ={mu}')
+        
+        # Ajout de la courbe (continue) sur le même graphique
+        ax.plot(x, y, color='blue', alpha=0.8, linewidth=2, label='Courbe de probabilité')
+        
+        ax.set_title(f'Distribution de Poisson\n(λ={mu})')
+        ax.set_xlabel('Nombre d\'événements')
+        ax.set_ylabel('Probabilité')
+        
+        # Ajouter la légende
+        ax.legend()
+        
+        # Sauvegarde du graphique dans un buffer
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/poisson_form.html', {'graph': graph})
+
+def normal_form(request):
+    graph = None
+    if request.method == "POST":
+        mu = float(request.POST.get('mu'))  # Moyenne
+        sigma = float(request.POST.get('sigma'))  # Écart-type
+        
+        # Génération des valeurs pour la courbe normale
+        x = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)
+        y = norm.pdf(x, mu, sigma)
+        
+        # Création du graphique
+        fig, ax = plt.subplots()
+        ax.plot(x, y, color='green', alpha=0.7)
+        ax.fill_between(x, y, color='green', alpha=0.3)
+        ax.set_title(f'Distribution Normale\n(μ={mu}, σ={sigma})')
+        ax.set_xlabel('Valeur')
+        ax.set_ylabel('Densité de probabilité')
+        
+        # Sauvegarde du graphique dans un buffer
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/normal_form.html', {'graph': graph})
+
+def exponential_form(request):
+    graph = None
+    if request.method == "POST":
+        lambda_ = float(request.POST.get('lambda'))  # Taux de l'événement
+        
+        # Génération des valeurs pour la fonction exponentielle
+        x = np.linspace(0, 10, 1000)
+        y = expon.pdf(x, scale=1/lambda_)
+        
+        # Création du graphique
+        fig, ax = plt.subplots()
+        ax.plot(x, y, color='green', alpha=0.7)
+        ax.fill_between(x, y, color='green', alpha=0.3)
+        ax.set_title(f'Distribution Exponentielle\n(λ={lambda_})')
+        ax.set_xlabel('Temps')
+        ax.set_ylabel('Densité de probabilité')
+        
+        # Sauvegarde du graphique dans un buffer
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        
+        # Conversion en base64 pour affichage dans le template
+        graph = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return render(request, 'analysis/exponential_form.html', {'graph': graph})
+
+def z_test_view(request):
+    result = None
+    decision = None
+
+    if request.method == "POST":
+        # Get inputs from the form
+        population_mean = float(request.POST.get("population_mean"))
+        sample_mean = float(request.POST.get("sample_mean"))
+        sample_std = float(request.POST.get("sample_std"))
+        sample_size = int(request.POST.get("sample_size"))
+        alpha = float(request.POST.get("alpha"))
+
+        # Calculate Z score
+        z_score = (sample_mean - population_mean) / (sample_std / np.sqrt(sample_size))
+
+        # Calculate p-value
+        p_value = 2 * (1 - norm.cdf(abs(z_score)))
+
+        # Decision
+        if p_value < alpha:
+            decision = "Rejet de l'hypothèse nulle (H₀)."
+        else:
+            decision = "Non-rejet de l'hypothèse nulle (H₀)."
+
+        result = {
+            "z_score": z_score,
+            "p_value": p_value,
+            "decision": decision,
+        }
+
+    return render(request, "analysis/z_test.html", {"result": result})
+
+def t_test_view(request):
+    result = None
+    decision = None
+
+    if request.method == "POST":
+        # Get inputs from the form
+        population_mean = float(request.POST.get("population_mean"))
+        sample_mean = float(request.POST.get("sample_mean"))
+        sample_std = float(request.POST.get("sample_std"))
+        sample_size = int(request.POST.get("sample_size"))
+        alpha = float(request.POST.get("alpha"))
+
+        # Degrees of freedom
+        df = sample_size - 1
+
+        # Calculate T score
+        t_score = (sample_mean - population_mean) / (sample_std / np.sqrt(sample_size))
+
+        # Calculate p-value
+        p_value = 2 * (1 - t.cdf(abs(t_score), df))
+
+        # Decision
+        if p_value < alpha:
+            decision = "Rejet de l'hypothèse nulle (H₀)."
+        else:
+            decision = "Non-rejet de l'hypothèse nulle (H₀)."
+
+        result = {
+            "t_score": t_score,
+            "p_value": p_value,
+            "decision": decision,
+        }
+
+    return render(request, "analysis/t_test.html", {"result": result})

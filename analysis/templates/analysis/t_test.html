@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function validateForm() {
+           
+            const sampleSize = document.getElementById("sample_size").value;
+            const errorMessage = document.getElementById("sample_size_error");
+
+           
+            errorMessage.textContent = '';
+
+           
+            if (parseInt(sampleSize) > 30) {
+                errorMessage.textContent = "La taille de l'échantillon doit être inférieure à 30.";
+                errorMessage.classList.add("text-red-500", "mt-2");
+                return false;  
+            }
+
+            return true; 
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">T-Test</h1>
+        <form method="POST" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <label class="block mb-2 font-semibold">Moyenne Population:</label>
+            <input type="number" step="0.01" name="population_mean" class="w-full p-2 border rounded mb-4">
+
+            <label class="block mb-2 font-semibold">Moyenne Échantillon:</label>
+            <input type="number" step="0.01" name="sample_mean" class="w-full p-2 border rounded mb-4">
+
+            <label class="block mb-2 font-semibold">Écart-Type Échantillon:</label>
+            <input type="number" step="0.01" name="sample_std" class="w-full p-2 border rounded mb-4">
+
+            <label class="block mb-2 font-semibold">Taille Échantillon:</label>
+            <input type="number" id="sample_size" name="sample_size" class="w-full p-2 border rounded mb-4">
+
+            <!-- Error message for sample size -->
+            <div id="sample_size_error" class="text-red-500 mt-2"></div>
+
+            <label class="block mb-2 font-semibold">Niveau de Signification (α):</label>
+            <input type="number" step="0.01" name="alpha" class="w-full p-2 border rounded mb-4">
+
+            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+                Calculer
+            </button>
+        </form>
+
+        {% if result %}
+        <div class="mt-6">
+            <h2 class="text-lg font-semibold text-gray-700">Résultats:</h2>
+            <p>T-Score: {{ result.t_score }}</p>
+            <p>p-Value: {{ result.p_value }}</p>
+            <p>Décision: {{ result.decision }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
