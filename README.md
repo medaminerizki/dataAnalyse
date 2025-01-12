@@ -3,17 +3,43 @@
 ## Description
 Ce projet Django permet d'importer un fichier Excel CSV, d'analyser les données et de les visualiser sous forme de différents graphiques.
 
+## Captures d'écran
+Voici les captures d'écran du projet :
+
+### Accueil
+![Accueil](screenshots/home.png)
+### Menu
+![Menu](screenshots/menu.png)
+### Sélection de graphique
+![Sélection de graphique](screenshots/graph_select.png)
+### Sélection de Loi de probabilité
+![Sélection de loi](screenshots/menu_probas.png)
+### Sélection du test d'hypothèse
+![Sélection de test](screenshots/menu_tests.png)
+
+
 ## Fonctionnalités
 - Importation d'un fichier Excel CSV
 - Analyse des données
 - Visualisation des données sous forme de :
-  - Histogramme (`screenshots/histogram.png`)
-  - Diagramme en barres (`screenshots/barplot.png`) 
-  - Diagramme en boîtes (`screenshots/boxplot.png`)
-  - Diagramme circulaire (`screenshots/piechart.png`)
-  - Nuage de points (`screenshots/scatterplot.png`)
-  - Carte de chaleur (`screenshots/heatmap.png`)
-  - Graphique à noyau de densité (`screenshots/kde.png`)
+  - Histogramme ![Histogramme](screenshots/histogram.png)
+  - Diagramme en barres ![Barplot](screenshots/barplot.png)
+  - Diagramme en boîtes ![Boxplot](screenshots/boxplot.png)
+  - Diagramme circulaire ![Piechart](screenshots/piechart.png)
+  - Nuage de points ![Scatterplot](screenshots/scatterplot.png)
+  - Carte de chaleur ![Heatmap](screenshots/heatmap.png)
+  - Graphique à noyau de densité ![KDE](screenshots/kde.png)
+- Calcul des probabilités
+  - Loi de Bernoulli ![Bernoulli](screenshots/bernoulli.png)
+  - Loi binomiale ![Binomiale](screenshots/binomiale.png)
+  - Loi uniforme ![Uniforme](screenshots/uniforme.png)
+  - Loi de Poisson ![Poisson](screenshots/poisson.png)
+  - Loi Normale ![Normale](screenshots/normale.png)
+  - Loi exponentielle ![Expon](screenshots/expon.png)
+-Tests des hypothèses
+  - Z-test ![Z-test](screenshots/ztest.png)
+  - T-test ![T-test](screenshots/ttest.png)
+
 
 ## Installation
 1. Clonez le dépôt Git :
@@ -40,6 +66,7 @@ Copy
 2. Une fois le fichier importé, les différents graphiques seront générés et affichés sur la page.
 3. Vous pouvez interagir avec les graphiques pour explorer davantage les données.
 
+<<<<<<< HEAD
 ## Captures d'écran
 Voici les captures d'écran du projet :
 
@@ -65,6 +92,8 @@ Voici les captures d'écran du projet :
 ![Carte de chaleur](screenshots/heatmap.png)
 ### Graphique à noyau de densité
 ![Graphique à noyau de densité](screenshots/kde.png)
+=======
+>>>>>>> eed2836 (Final version)
 
 ## Auteurs
 Mohamed Amine RIZKI  
