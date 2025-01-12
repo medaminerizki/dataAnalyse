@@ -66,34 +66,6 @@ Copy
 2. Une fois le fichier importé, les différents graphiques seront générés et affichés sur la page.
 3. Vous pouvez interagir avec les graphiques pour explorer davantage les données.
 
-<<<<<<< HEAD
-## Captures d'écran
-Voici les captures d'écran du projet :
-
-### Accueil
-![Accueil](screenshots/home.png)
-### Menu
-![Menu](screenshots/menu.png)
-### Sélection de graphique
-![Sélection de graphique](screenshots/graph_select.png)
-### Menu
-![Menu](screenshots/menu.png)
-### Histogramme
-![Histogramme](screenshots/histogram.png)
-### Diagramme en barres
-![Diagramme en barres](screenshots/barplot.png)
-### Diagramme en boîtes
-![Diagramme en boîtes](screenshots/boxplot.png)
-### Diagramme circulaire
-![Diagramme circulaire](screenshots/piechart.png)
-### Nuage de points
-![Nuage de points](screenshots/scatterplot.png)
-### Carte de chaleur
-![Carte de chaleur](screenshots/heatmap.png)
-### Graphique à noyau de densité
-![Graphique à noyau de densité](screenshots/kde.png)
-=======
->>>>>>> eed2836 (Final version)
 
 ## Auteurs
 Mohamed Amine RIZKI  
